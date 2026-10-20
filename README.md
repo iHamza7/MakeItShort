@@ -65,7 +65,6 @@ MakeItShort/
 └── 📄 README.md
 ```
 
-> 📝 Rename the folders above to match your actual project layout.
 
 ---
 
@@ -120,17 +119,8 @@ Open **http://localhost:4200** in your browser. 🎉
 | `GET`  | `/{shortCode}` | 🔀 Redirect to the original URL and count the click |
 | `GET`  | `/api/urls/{shortCode}/stats` | 📊 Get original URL, clicks, active status and creator |
 
-> 📝 Update the paths above to match your controllers.
 
 ---
-
-## 🖼️ Screenshots
-
-> Add screenshots here after your first run. 📸
-
-| 🌙 Midnight | ☀️ Snow |
-|:-----------:|:-------:|
-| `docs/midnight.png` | `docs/snow.png` |
 
 ---
 
