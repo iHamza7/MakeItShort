@@ -138,7 +138,6 @@ All colors, fonts, corner radius and spacing are CSS variables in the **design t
 - [x] ⚡ Redis caching
 - [x] 🚦 Rate limiting
 - [ ] 📋 One-click copy button
-- [ ] 📱 QR code for each short link
 - [ ] 🔐 User accounts and a link dashboard
 - [ ] 🐳 Docker Compose setup
 
