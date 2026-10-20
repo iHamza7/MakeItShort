@@ -1,0 +1,19 @@
+# Java / Maven / Gradle
+target/
+build/
+*.class
+*.log
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# Angular / Node
+node_modules/
+dist/
+.angular/
+
+# Secrets
+.env
+application-local.properties

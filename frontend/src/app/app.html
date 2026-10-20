@@ -1,0 +1,114 @@
+<main class="page">
+  <!-- Theme switcher: pure CSS, no TypeScript needed. Add a theme = add a radio + a swatch + a block in the CSS. -->
+  <input class="theme-radio" type="radio" name="theme" id="theme-midnight" aria-label="Midnight theme" checked />
+  <input class="theme-radio" type="radio" name="theme" id="theme-snow" aria-label="Snow theme" />
+  <input class="theme-radio" type="radio" name="theme" id="theme-lagoon" aria-label="Lagoon theme" />
+  <input class="theme-radio" type="radio" name="theme" id="theme-sunset" aria-label="Sunset theme" />
+
+  <div class="shell">
+    <div class="wrap">
+      <header class="topbar">
+        <p class="eyebrow">tiny-link</p>
+        <div class="themes" role="group" aria-label="Choose theme">
+          <label class="swatch swatch-midnight" for="theme-midnight" title="Midnight"></label>
+          <label class="swatch swatch-snow" for="theme-snow" title="Snow"></label>
+          <label class="swatch swatch-lagoon" for="theme-lagoon" title="Lagoon"></label>
+          <label class="swatch swatch-sunset" for="theme-sunset" title="Sunset"></label>
+        </div>
+      </header>
+
+      <section class="card hero">
+        <h1>URL shortening with expiry, analytics and Redis backed caching</h1>
+        <p class="lead">
+          Create short URLs, open redirects, and inspect click analytics from one screen
+        </p>
+        <div class="explain">
+          <p>
+            <strong>Rate-limit requests:</strong> counts how many API requests one client/IP makes
+            within a short time window
+          </p>
+          <p>
+            <strong>Url clicks:</strong> counts how many times a short link is opened and redirected.
+          </p>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="card card-create">
+          <h2>Create short URL</h2>
+          <form [formGroup]="form" (ngSubmit)="shortenUrl()">
+            <label class="field-wide">
+              Original URL
+              <input formControlName="originalUrl" placeholder="https://example.com/very/long/url" />
+            </label>
+            <label>
+              Custom alias
+              <input formControlName="customAlias" placeholder="optional-code" />
+            </label>
+
+            <label>
+              Expires at
+              <input formControlName="expiresAt" type="datetime-local" />
+            </label>
+
+            <button class="field-wide" type="submit" [disabled]="loading() || form.invalid">
+              {{ loading() ? 'Creating..' : 'Shorten URL' }}
+            </button>
+          </form>
+          @if (error()) {
+          <p class="error" role="alert">{{ error() }}</p>
+          }
+
+          @if (result(); as result) {
+          <div class="result" aria-live="polite">
+            <p>
+              <strong>Short URL:</strong>
+              <a class="short-link" [href]="result.shortUrl" target="_blank" rel="noreferrer">
+                {{ result.shortUrl }}
+              </a>
+            </p>
+            <p>
+              <strong>Short code:</strong>
+              <span class="chip">{{ result.shortCode }}</span>
+            </p>
+            <p>
+              <strong>Created:</strong>
+              {{ result.createdAt | date: 'medium' }}
+            </p>
+          </div>
+          }
+        </article>
+
+        <article class="card card-stats">
+          <h2>Get URL stats</h2>
+          <form [formGroup]="statsForm" (ngSubmit)="loadStats()">
+            <label class="field-wide">
+              Short code
+              <input formControlName="shortCode" placeholder="abc123" />
+            </label>
+
+            <button class="field-wide" type="submit" [disabled]="statsLoading() || statsForm.invalid">
+              {{ statsLoading() ? 'Loading...' : 'Fetch stats' }}
+            </button>
+          </form>
+
+          @if (statsError()) {
+          <p class="error" role="alert">{{ statsError() }}</p>
+          }
+
+          @if (stats(); as stats) {
+          <div class="result" aria-live="polite">
+            <p><strong>Original URL:</strong> {{ stats.originalUrl }}</p>
+            <p><strong>Clicks:</strong> <span class="clicks">{{ stats.clickCount }}</span></p>
+            <p>
+              <strong>Active:</strong>
+              <span class="chip" [class.chip-off]="!stats.active">{{ stats.active ? 'Yes' : 'No' }}</span>
+            </p>
+            <p><strong>Created by:</strong> {{ stats.createdBy }}</p>
+          </div>
+          }
+        </article>
+      </section>
+    </div>
+  </div>
+</main>
